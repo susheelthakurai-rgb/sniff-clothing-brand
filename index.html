@@ -17,6 +17,7 @@
             --accent: #3498db;
             --light: #ecf0f1;
             --dark: #34495e;
+            --success: #27ae60;
         }
 
         body {
@@ -54,6 +55,7 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         nav a {
@@ -84,6 +86,15 @@
             align-items: center;
             justify-content: center;
             font-size: 0.75rem;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-icon {
+            cursor: pointer;
+            font-size: 1.5rem;
         }
 
         /* Hero Section */
@@ -136,6 +147,12 @@
             color: var(--primary);
         }
 
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Products Section */
         .products {
             padding: 5rem 5%;
@@ -146,8 +163,37 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 3rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background: white;
+            border: 2px solid var(--light);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .product-grid {
@@ -162,11 +208,29 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            position: relative;
         }
 
         .product-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .product-badge.new {
+            background: var(--success);
         }
 
         .product-image {
@@ -178,6 +242,7 @@
             justify-content: center;
             font-size: 3rem;
             color: var(--dark);
+            position: relative;
         }
 
         .product-info {
@@ -194,7 +259,12 @@
             font-size: 1.5rem;
             color: var(--secondary);
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-rating {
+            color: #f39c12;
+            margin-bottom: 0.5rem;
         }
 
         .product-description {
@@ -202,7 +272,28 @@
             margin-bottom: 1rem;
         }
 
-        /* Cart Modal */
+        .size-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .size-btn {
+            padding: 0.3rem 0.8rem;
+            border: 2px solid var(--light);
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .size-btn:hover, .size-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -251,12 +342,29 @@
             border-bottom: 1px solid var(--light);
         }
 
+        .cart-item-info {
+            flex: 1;
+        }
+
         .cart-total {
             font-size: 1.5rem;
             font-weight: bold;
             text-align: right;
             margin-top: 1rem;
             color: var(--primary);
+        }
+
+        .promo-code {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .promo-code input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--light);
+            border-radius: 5px;
         }
 
         /* Checkout Form */
@@ -276,18 +384,64 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 0.75rem;
             border: 2px solid var(--light);
             border-radius: 5px;
             font-size: 1rem;
+            font-family: inherit;
         }
 
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            border: 2px solid var(--light);
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover, .payment-method.selected {
+            border-color: var(--accent);
+            background: #e8f4f8;
+        }
+
+        .order-summary {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-row.total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary);
+            border-top: 2px solid var(--dark);
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
         }
 
         /* Features Section */
@@ -307,6 +461,13 @@
         .feature-card {
             text-align: center;
             padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
         .feature-icon {
@@ -319,42 +480,85 @@
             color: var(--primary);
         }
 
-        /* Footer */
-        footer {
+        /* Newsletter */
+        .newsletter {
+            padding: 5rem 5%;
+            text-align: center;
             background: var(--primary);
             color: white;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
             padding: 3rem 5%;
-            text-align: center;
         }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
         }
 
         .social-links {
             display: flex;
-            justify-content: center;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
         .social-links a {
-            color: white;
             font-size: 1.5rem;
-            transition: color 0.3s;
         }
 
-        .social-links a:hover {
-            color: var(--secondary);
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         /* Responsive */
@@ -369,9 +573,14 @@
 
             nav ul {
                 gap: 1rem;
+                font-size: 0.9rem;
             }
 
             .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-methods {
                 grid-template-columns: 1fr;
             }
         }
@@ -407,6 +616,65 @@
             color: var(--secondary);
             cursor: pointer;
             font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+
+        .success-message {
+            background: var(--success);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .error-message {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .wishlist-btn.active {
+            color: var(--secondary);
         }
     </style>
 </head>
@@ -420,6 +688,9 @@
                 <li><a href="#products">Shop</a></li>
                 <li><a href="#features">About</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li class="user-menu">
+                    <span class="user-icon" onclick="toggleUserMenu()">👤</span>
+                </li>
                 <li class="cart-icon" onclick="toggleCart()">
                     🛒
                     <span class="cart-count" id="cartCount">0</span>
@@ -439,6 +710,16 @@
     <!-- Products Section -->
     <section class="products" id="products">
         <h2 class="section-title">Our Collection</h2>
+        <p class="section-subtitle">Discover our latest styles and timeless classics</p>
+        
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+            <button class="filter-btn" onclick="filterProducts('clothing')">Clothing</button>
+            <button class="filter-btn" onclick="filterProducts('accessories')">Accessories</button>
+            <button class="filter-btn" onclick="filterProducts('footwear')">Footwear</button>
+            <button class="filter-btn" onclick="filterProducts('new')">New Arrivals</button>
+        </div>
+
         <div class="product-grid" id="productGrid"></div>
     </section>
 
@@ -466,26 +747,75 @@
                 <h3>Easy Returns</h3>
                 <p>30-day hassle-free return policy</p>
             </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Payment</h3>
+                <p>Multiple payment options with bank-level security</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>24/7 Support</h3>
+                <p>Customer service always ready to help</p>
+            </div>
         </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to get special offers, free giveaways, and exclusive deals</p>
+        <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
     </section>
 
     <!-- Footer -->
     <footer id="contact">
         <div class="footer-content">
-            <h3>SNIFF</h3>
-            <div class="footer-links">
-                <a href="#" style="color: white; text-decoration: none;">Privacy Policy</a>
-                <a href="#" style="color: white; text-decoration: none;">Terms of Service</a>
-                <a href="#" style="color: white; text-decoration: none;">Shipping Info</a>
-                <a href="#" style="color: white; text-decoration: none;">Contact Us</a>
+            <div class="footer-section">
+                <h3>SNIFF</h3>
+                <p>Premium clothing for the modern individual. Quality, style, and sustainability in every piece.</p>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">📷</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📌</a>
+                </div>
             </div>
-            <div class="social-links">
-                <a href="#">📘</a>
-                <a href="#">📷</a>
-                <a href="#">🐦</a>
-                <a href="#">📌</a>
+            <div class="footer-section">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Men's Collection</a></li>
+                    <li><a href="#">Women's Collection</a></li>
+                    <li><a href="#">Accessories</a></li>
+                    <li><a href="#">Sale</a></li>
+                </ul>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.8;">© 2025 Sniff. All rights reserved.</p>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Sniff. All rights reserved. | Designed with ❤️</p>
         </div>
     </footer>
 
@@ -497,153 +827,331 @@
                 <span class="close-modal" onclick="toggleCart()">×</span>
             </div>
             <div id="cartItems"></div>
+            <div class="promo-code">
+                <input type="text" id="promoInput" placeholder="Enter promo code">
+                <button class="btn" onclick="applyPromo()">Apply</button>
+            </div>
             <div class="cart-total" id="cartTotal"></div>
             <div class="checkout-form" id="checkoutForm" style="display: none;">
                 <h3 style="margin-bottom: 1rem;">Checkout</h3>
-                <form onsubmit="processPayment(event)">
+                <form onsubmit="processPayment(event)" id="paymentForm">
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" required placeholder="John Doe">
+                        <label>Full Name *</label>
+                        <input type="text" id="fullName" required placeholder="John Doe">
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" required placeholder="john@example.com">
+                        <label>Email *</label>
+                        <input type="email" id="email" required placeholder="john@example.com">
                     </div>
                     <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" required placeholder="123 Main St">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="phone" required placeholder="+1 234 567 8900">
                     </div>
                     <div class="form-group">
-                        <label>City</label>
-                        <input type="text" required placeholder="New York">
-                    </div>
-                    <div class="form-group">
-                        <label>Postal Code</label>
-                        <input type="text" required placeholder="10001">
-                    </div>
-                    <div class="form-group">
-                        <label>Payment Method</label>
-                        <select required>
-                            <option value="">Select Payment Method</option>
-                            <option value="card">Credit/Debit Card</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="stripe">Stripe</option>
-                            <option value="cod">Cash on Delivery</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Card Number</label>
-                        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <label>Shipping Address *</label>
+                        <textarea id="address" required placeholder="Street address, apartment, suite, etc." rows="3"></textarea>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Expiry Date</label>
-                            <input type="text" placeholder="MM/YY" maxlength="5">
+                            <label>City *</label>
+                            <input type="text" id="city" required placeholder="New York">
                         </div>
                         <div class="form-group">
-                            <label>CVV</label>
-                            <input type="text" placeholder="123" maxlength="3">
+                            <label>State/Province *</label>
+                            <input type="text" id="state" required placeholder="NY">
                         </div>
                     </div>
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Complete Purchase</button>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Postal Code *</label>
+                            <input type="text" id="postal" required placeholder="10001">
+                        </div>
+                        <div class="form-group">
+                            <label>Country *</label>
+                            <input type="text" id="country" required placeholder="United States">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Payment Method *</label>
+                        <div class="payment-methods">
+                            <div class="payment-method" onclick="selectPayment('card')">
+                                💳 Credit/Debit Card
+                            </div>
+                            <div class="payment-method" onclick="selectPayment('paypal')">
+                                🅿️ PayPal
+                            </div>
+                            <div class="payment-method" onclick="selectPayment('stripe')">
+                                💰 Stripe
+                            </div>
+                            <div class="payment-method" onclick="selectPayment('cod')">
+                                💵 Cash on Delivery
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cardDetails" style="display: none;">
+                        <div class="form-group">
+                            <label>Card Number *</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Expiry Date *</label>
+                                <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV *</label>
+                                <input type="text" id="cvv" placeholder="123" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-summary">
+                        <h3 style="margin-bottom: 1rem;">Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="summarySubtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="summaryShipping">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (10%):</span>
+                            <span id="summaryTax">$0.00</span>
+                        </div>
+                        <div class="summary-row" id="discountRow" style="display: none; color: var(--success);">
+                            <span>Discount:</span>
+                            <span id="summaryDiscount">-$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="summaryTotal">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" id="submitBtn" style="width: 100%; margin-top: 1rem;">
+                        Complete Purchase
+                    </button>
                 </form>
             </div>
-            <button class="btn" onclick="showCheckout()" id="checkoutBtn" style="width: 100%; margin-top: 1rem; display: none;">Proceed to Checkout</button>
+            <button class="btn" onclick="showCheckout()" id="checkoutBtn" style="width: 100%; margin-top: 1rem; display: none;">
+                Proceed to Checkout
+            </button>
         </div>
     </div>
 
     <script>
-        // Product Data
+        // Enhanced Product Data with categories and ratings
         const products = [
             {
                 id: 1,
                 name: "Classic White Tee",
                 price: 29.99,
                 description: "Premium cotton t-shirt with perfect fit",
-                emoji: "👕"
+                emoji: "👕",
+                category: "clothing",
+                rating: 4.5,
+                sizes: ["S", "M", "L", "XL"],
+                badge: "NEW"
             },
             {
                 id: 2,
                 name: "Denim Jacket",
                 price: 89.99,
                 description: "Vintage-style denim jacket",
-                emoji: "🧥"
+                emoji: "🧥",
+                category: "clothing",
+                rating: 4.8,
+                sizes: ["S", "M", "L", "XL"],
+                badge: "SALE"
             },
             {
                 id: 3,
                 name: "Slim Fit Jeans",
                 price: 69.99,
                 description: "Comfortable stretch denim",
-                emoji: "👖"
+                emoji: "👖",
+                category: "clothing",
+                rating: 4.6,
+                sizes: ["28", "30", "32", "34", "36"]
             },
             {
                 id: 4,
                 name: "Hoodie",
                 price: 54.99,
                 description: "Cozy fleece hoodie",
-                emoji: "🧥"
+                emoji: "🧥",
+                category: "clothing",
+                rating: 4.7,
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                badge: "NEW"
             },
             {
                 id: 5,
                 name: "Sneakers",
                 price: 99.99,
                 description: "Stylish casual sneakers",
-                emoji: "👟"
+                emoji: "👟",
+                category: "footwear",
+                rating: 4.9,
+                sizes: ["7", "8", "9", "10", "11", "12"]
             },
             {
                 id: 6,
                 name: "Baseball Cap",
                 price: 24.99,
                 description: "Adjustable cotton cap",
-                emoji: "🧢"
+                emoji: "🧢",
+                category: "accessories",
+                rating: 4.3,
+                sizes: ["One Size"]
             },
             {
                 id: 7,
                 name: "Leather Belt",
                 price: 39.99,
                 description: "Genuine leather belt",
-                emoji: "👔"
+                emoji: "👔",
+                category: "accessories",
+                rating: 4.4,
+                sizes: ["S", "M", "L"]
             },
             {
                 id: 8,
                 name: "Sunglasses",
                 price: 79.99,
                 description: "UV protection sunglasses",
-                emoji: "🕶️"
+                emoji: "🕶️",
+                category: "accessories",
+                rating: 4.6,
+                sizes: ["One Size"],
+                badge: "NEW"
+            },
+            {
+                id: 9,
+                name: "Leather Boots",
+                price: 129.99,
+                description: "Premium leather boots",
+                emoji: "🥾",
+                category: "footwear",
+                rating: 4.8,
+                sizes: ["7", "8", "9", "10", "11", "12"]
+            },
+            {
+                id: 10,
+                name: "Backpack",
+                price: 59.99,
+                description: "Durable canvas backpack",
+                emoji: "🎒",
+                category: "accessories",
+                rating: 4.5,
+                sizes: ["One Size"]
             }
         ];
 
         let cart = [];
+        let currentFilter = 'all';
+        let selectedPaymentMethod = null;
+        let discount = 0;
+        const promoCodes = {
+            'SNIFF10': 0.10,
+            'WELCOME20': 0.20,
+            'SAVE15': 0.15
+        };
+
+        // Load cart from localStorage
+        function loadCart() {
+            const savedCart = localStorage.getItem('sniffCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('sniffCart', JSON.stringify(cart));
+        }
 
         // Render Products
-        function renderProducts() {
+        function renderProducts(filter = 'all') {
             const grid = document.getElementById('productGrid');
-            grid.innerHTML = products.map(product => `
+            let filteredProducts = products;
+            
+            if (filter !== 'all') {
+                if (filter === 'new') {
+                    filteredProducts = products.filter(p => p.badge === 'NEW');
+                } else {
+                    filteredProducts = products.filter(p => p.category === filter);
+                }
+            }
+            
+            grid.innerHTML = filteredProducts.map(product => `
                 <div class="product-card">
+                    <button class="wishlist-btn" onclick="toggleWishlist(${product.id})">
+                        🤍
+                    </button>
+                    ${product.badge ? `<div class="product-badge ${product.badge === 'NEW' ? 'new' : ''}">${product.badge}</div>` : ''}
                     <div class="product-image">${product.emoji}</div>
                     <div class="product-info">
                         <h3 class="product-name">${product.name}</h3>
+                        <div class="product-rating">${'⭐'.repeat(Math.floor(product.rating))} ${product.rating}</div>
                         <p class="product-description">${product.description}</p>
                         <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <div class="size-selector" id="size-${product.id}">
+                            ${product.sizes.map(size => `
+                                <button class="size-btn" onclick="selectSize(${product.id}, '${size}')">${size}</button>
+                            `).join('')}
+                        </div>
                         <button class="btn" onclick="addToCart(${product.id})">Add to Cart</button>
                     </div>
                 </div>
             `).join('');
         }
 
+        // Filter Products
+        function filterProducts(category) {
+            currentFilter = category;
+            renderProducts(category);
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Select Size
+        function selectSize(productId, size) {
+            const sizeButtons = document.querySelectorAll(`#size-${productId} .size-btn`);
+            sizeButtons.forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
         // Add to Cart
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
+            const sizeButtons = document.querySelectorAll(`#size-${productId} .size-btn.selected`);
+            
+            if (sizeButtons.length === 0 && product.sizes.length > 1) {
+                showNotification('Please select a size', 'error');
+                return;
+            }
+            
+            const selectedSize = sizeButtons.length > 0 ? sizeButtons[0].textContent : product.sizes[0];
+            const existingItem = cart.find(item => item.id === productId && item.size === selectedSize);
             
             if (existingItem) {
                 existingItem.quantity++;
             } else {
-                cart.push({ ...product, quantity: 1 });
+                cart.push({ ...product, quantity: 1, size: selectedSize });
             }
             
             updateCart();
-            showNotification('Added to cart!');
+            saveCart();
+            showNotification('Added to cart!', 'success');
         }
 
         // Update Cart
@@ -657,48 +1165,76 @@
             cartCount.textContent = totalItems;
             
             if (cart.length === 0) {
-                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty<br>Start shopping to add items!</div>';
                 cartTotal.innerHTML = '';
                 checkoutBtn.style.display = 'none';
             } else {
                 cartItems.innerHTML = cart.map(item => `
                     <div class="cart-item">
-                        <div>
+                        <div class="cart-item-info">
                             <strong>${item.name}</strong><br>
-                            <span style="color: #7f8c8d;">$${item.price.toFixed(2)} each</span>
+                            <span style="color: #7f8c8d;">Size: ${item.size} | $${item.price.toFixed(2)} each</span>
                         </div>
                         <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, '${item.size}', -1)">-</button>
                             <span style="margin: 0 0.5rem;">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                            <span class="remove-item" onclick="removeFromCart(${item.id})">🗑️</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, '${item.size}', 1)">+</button>
+                            <span class="remove-item" onclick="removeFromCart(${item.id}, '${item.size}')">🗑️</span>
                         </div>
                     </div>
                 `).join('');
                 
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const discountAmount = subtotal * discount;
+                const total = subtotal - discountAmount;
+                
+                cartTotal.innerHTML = `
+                    <div style="text-align: right;">
+                        <div>Subtotal: $${subtotal.toFixed(2)}</div>
+                        ${discount > 0 ? `<div style="color: var(--success);">Discount (${(discount * 100).toFixed(0)}%): -$${discountAmount.toFixed(2)}</div>` : ''}
+                        <div style="font-size: 1.5rem; margin-top: 0.5rem;">Total: $${total.toFixed(2)}</div>
+                    </div>
+                `;
                 checkoutBtn.style.display = 'block';
             }
         }
 
         // Update Quantity
-        function updateQuantity(productId, change) {
-            const item = cart.find(item => item.id === productId);
+        function updateQuantity(productId, size, change) {
+            const item = cart.find(item => item.id === productId && item.size === size);
             if (item) {
                 item.quantity += change;
                 if (item.quantity <= 0) {
-                    removeFromCart(productId);
+                    removeFromCart(productId, size);
                 } else {
                     updateCart();
+                    saveCart();
                 }
             }
         }
 
         // Remove from Cart
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
+        function removeFromCart(productId, size) {
+            cart = cart.filter(item => !(item.id === productId && item.size === size));
             updateCart();
+            saveCart();
+            showNotification('Item removed from cart', 'success');
+        }
+
+        // Apply Promo Code
+        function applyPromo() {
+            const promoInput = document.getElementById('promoInput');
+            const code = promoInput.value.toUpperCase();
+            
+            if (promoCodes[code]) {
+                discount = promoCodes[code];
+                updateCart();
+                updateOrderSummary();
+                showNotification(`Promo code applied! ${(discount * 100).toFixed(0)}% off`, 'success');
+                promoInput.value = '';
+            } else {
+                showNotification('Invalid promo code', 'error');
+            }
         }
 
         // Toggle Cart Modal
@@ -713,38 +1249,180 @@
         function showCheckout() {
             document.getElementById('checkoutForm').style.display = 'block';
             document.getElementById('checkoutBtn').style.display = 'none';
+            updateOrderSummary();
+        }
+
+        // Select Payment Method
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-method').forEach(pm => {
+                pm.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            const cardDetails = document.getElementById('cardDetails');
+            if (method === 'card' || method === 'stripe') {
+                cardDetails.style.display = 'block';
+                document.getElementById('cardNumber').required = true;
+                document.getElementById('expiry').required = true;
+                document.getElementById('cvv').required = true;
+            } else {
+                cardDetails.style.display = 'none';
+                document.getElementById('cardNumber').required = false;
+                document.getElementById('expiry').required = false;
+                document.getElementById('cvv').required = false;
+            }
+        }
+
+        // Update Order Summary
+        function updateOrderSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 100 ? 0 : 10;
+            const tax = subtotal * 0.10;
+            const discountAmount = subtotal * discount;
+            const total = subtotal + shipping + tax - discountAmount;
+            
+            document.getElementById('summarySubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('summaryShipping').textContent = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
+            document.getElementById('summaryTax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('summaryTotal').textContent = `$${total.toFixed(2)}`;
+            
+            if (discount > 0) {
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('summaryDiscount').textContent = `-$${discountAmount.toFixed(2)}`;
+            }
         }
 
         // Process Payment
-        function processPayment(event) {
+        async function processPayment(event) {
             event.preventDefault();
-            alert('Payment processed successfully! Thank you for your order.\n\nOrder confirmation has been sent to your email.');
+            
+            if (!selectedPaymentMethod) {
+                showNotification('Please select a payment method', 'error');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            
+            // Simulate payment processing
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Collect order data
+            const orderData = {
+                customer: {
+                    name: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value
+                },
+                shipping: {
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    postal: document.getElementById('postal').value,
+                    country: document.getElementById('country').value
+                },
+                items: cart,
+                payment: {
+                    method: selectedPaymentMethod,
+                    subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                    shipping: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) > 100 ? 0 : 10,
+                    tax: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * 0.10,
+                    discount: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * discount,
+                    total: calculateTotal()
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Order Data:', orderData);
+            
+            // Here you would send orderData to your backend API
+            // Example: await fetch('/api/orders', { method: 'POST', body: JSON.stringify(orderData) });
+            
+            showNotification('Payment processed successfully! Order confirmation sent to your email.', 'success');
+            
+            // Clear cart
             cart = [];
+            discount = 0;
             updateCart();
-            toggleCart();
+            saveCart();
+            
+            // Reset form
+            document.getElementById('paymentForm').reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Complete Purchase';
+            
+            setTimeout(() => {
+                toggleCart();
+            }, 2000);
+        }
+
+        // Calculate Total
+        function calculateTotal() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 100 ? 0 : 10;
+            const tax = subtotal * 0.10;
+            const discountAmount = subtotal * discount;
+            return subtotal + shipping + tax - discountAmount;
+        }
+
+        // Newsletter Subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            console.log('Newsletter subscription:', email);
+            showNotification('Thank you for subscribing!', 'success');
+            event.target.reset();
+        }
+
+        // Toggle Wishlist
+        function toggleWishlist(productId) {
+            event.target.classList.toggle('active');
+            const isActive = event.target.classList.contains('active');
+            event.target.textContent = isActive ? '❤️' : '🤍';
+            showNotification(isActive ? 'Added to wishlist' : 'Removed from wishlist', 'success');
+        }
+
+        // Toggle User Menu
+        function toggleUserMenu() {
+            showNotification('User authentication coming soon!', 'success');
         }
 
         // Show Notification
-        function showNotification(message) {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.textContent = message;
             notification.style.cssText = `
                 position: fixed;
                 top: 100px;
                 right: 20px;
-                background: #27ae60;
+                background: ${type === 'success' ? 'var(--success)' : 'var(--secondary)'};
                 color: white;
                 padding: 1rem 2rem;
                 border-radius: 5px;
                 z-index: 3000;
                 animation: slideIn 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             `;
             document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 2000);
+            setTimeout(() => notification.remove(), 3000);
         }
 
         // Initialize
+        loadCart();
         renderProducts();
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
     </script>
 </body>
 </html>
